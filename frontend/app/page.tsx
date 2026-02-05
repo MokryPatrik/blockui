@@ -85,6 +85,56 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Available Blocks Section */}
+      <section className="px-4 py-20 md:py-32 border-b-2 border-black bg-[#f7f7f7]">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-black mb-12 tracking-tighter">
+            AVAILABLE BLOCKS
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Logo Carousel",
+                desc: "Rotating logos, grid layout, autoplay, responsive breakpoints.",
+                detail: "Perfect for trust & partner showcases.",
+              },
+              {
+                name: "Testimonials",
+                desc: "Portraits, quoted text, ratings, optional video.",
+                detail: "Adds real voices to your marketing.",
+              },
+              {
+                name: "Features Stack",
+                desc: "List of cards, numeric highlights, hover interactions.",
+                detail: "Ideal for product specs and comparisons.",
+              },
+              {
+                name: "Callout Banner",
+                desc: "Bold headline, CTA button, contextual background colors.",
+                detail: "Use for promos and important alerts.",
+              },
+              {
+                name: "Stats Grid",
+                desc: "Animated counters, small captions, mono typography.",
+                detail: "Showcase KPIs & proof points instantly.",
+              },
+              {
+                name: "Feature Carousel",
+                desc: "Swipeable sections with copy + imagery + tiny badges.",
+                detail: "Highlight roadmap or releases.",
+              },
+            ].map((block, index) => (
+              <div key={index} className="border-2 border-black p-8 bg-white">
+                <div className="text-sm font-mono text-gray-500 mb-3">Block #{index + 1}</div>
+                <h3 className="text-2xl font-black mb-3 tracking-tight">{block.name}</h3>
+                <p className="text-lg text-gray-800 mb-4">{block.desc}</p>
+                <p className="text-sm font-mono text-gray-600">{block.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Section */}
       <section className="px-4 py-20 md:py-32 border-b-2 border-black">
         <div className="max-w-6xl mx-auto">
