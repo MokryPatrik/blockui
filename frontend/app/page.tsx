@@ -1,4 +1,47 @@
+import { useState } from "react";
+
+const blockTypes = [
+  {
+    name: "Logo Carousel",
+    desc: "Rotating logos, grid layout, autoplay, responsive breakpoints.",
+    detail: "Perfect for trust & partner showcases.",
+    preview: "Logos swipe left-right with small labels — autoplay + hover pause.",
+  },
+  {
+    name: "Testimonials",
+    desc: "Portraits, quoted text, ratings, optional video.",
+    detail: "Adds real voices to your marketing.",
+    preview: "Cards with avatars, 5-star rating, quote, CTA button to 'See full story'.",
+  },
+  {
+    name: "Features Stack",
+    desc: "List of cards, numeric highlights, hover interactions.",
+    detail: "Ideal for product specs and comparisons.",
+    preview: "Three columns of stats with pouring highlight bars and callout chip.",
+  },
+  {
+    name: "Callout Banner",
+    desc: "Bold headline, CTA button, contextual background colors.",
+    detail: "Use for promos and important alerts.",
+    preview: "Huge headline, subcopy, CTA buttons, dark border, flashing label.",
+  },
+  {
+    name: "Stats Grid",
+    desc: "Animated counters, small captions, mono typography.",
+    detail: "Showcase KPIs & proof points instantly.",
+    preview: "Four counters (visitors, launches, uptime, conversions) with micro-anim.",
+  },
+  {
+    name: "Feature Carousel",
+    desc: "Swipeable sections with copy + imagery + tiny badges.",
+    detail: "Highlight roadmap or releases.",
+    preview: "Slides with icon, title, description; arrows and progress dots.",
+  },
+];
+
 export default function Home() {
+  const [activeBlock, setActiveBlock] = useState(blockTypes[0]);
+
   return (
     <main className="min-h-screen bg-white text-black">
       {/* Hero Section */}
@@ -92,45 +135,39 @@ export default function Home() {
             AVAILABLE BLOCKS
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Logo Carousel",
-                desc: "Rotating logos, grid layout, autoplay, responsive breakpoints.",
-                detail: "Perfect for trust & partner showcases.",
-              },
-              {
-                name: "Testimonials",
-                desc: "Portraits, quoted text, ratings, optional video.",
-                detail: "Adds real voices to your marketing.",
-              },
-              {
-                name: "Features Stack",
-                desc: "List of cards, numeric highlights, hover interactions.",
-                detail: "Ideal for product specs and comparisons.",
-              },
-              {
-                name: "Callout Banner",
-                desc: "Bold headline, CTA button, contextual background colors.",
-                detail: "Use for promos and important alerts.",
-              },
-              {
-                name: "Stats Grid",
-                desc: "Animated counters, small captions, mono typography.",
-                detail: "Showcase KPIs & proof points instantly.",
-              },
-              {
-                name: "Feature Carousel",
-                desc: "Swipeable sections with copy + imagery + tiny badges.",
-                detail: "Highlight roadmap or releases.",
-              },
-            ].map((block, index) => (
-              <div key={index} className="border-2 border-black p-8 bg-white">
-                <div className="text-sm font-mono text-gray-500 mb-3">Block #{index + 1}</div>
+            {blockTypes.map((block, index) => (
+              <button
+                key={block.name}
+                type="button"
+                onClick={() => setActiveBlock(block)}
+                className={`border-2 p-8 text-left transition-colors duration-150 ${
+                  activeBlock.name === block.name
+                    ? "border-black bg-white"
+                    : "border-black/60 bg-transparent"
+                }`}
+              >
+                <div className="text-sm font-mono text-gray-500 mb-3">
+                  Block #{index + 1}
+                </div>
                 <h3 className="text-2xl font-black mb-3 tracking-tight">{block.name}</h3>
                 <p className="text-lg text-gray-800 mb-4">{block.desc}</p>
                 <p className="text-sm font-mono text-gray-600">{block.detail}</p>
-              </div>
+              </button>
             ))}
+          </div>
+
+          <div className="mt-12 md:mt-16 border-4 border-black p-10 bg-white">
+            <div className="text-xs font-mono text-gray-500 mb-2">LIVE PREVIEW</div>
+            <h3 className="text-3xl font-black mb-4">{activeBlock.name}</h3>
+            <p className="text-lg text-gray-800 mb-6">{activeBlock.preview}</p>
+            <div className="flex flex-wrap gap-4">
+              <button className="px-6 py-3 bg-black text-white font-bold border-2 border-black hover:bg-white hover:text-black">
+                Open block editor →
+              </button>
+              <button className="px-6 py-3 bg-white text-black font-bold border-2 border-black hover:bg-black hover:text-white">
+                Preview embed snippet →
+              </button>
+            </div>
           </div>
         </div>
       </section>
