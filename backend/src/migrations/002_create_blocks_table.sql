@@ -7,11 +7,12 @@ CREATE TABLE IF NOT EXISTS blocks (
   is_published BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  created_by VARCHAR(255),
-  INDEX idx_type (type),
-  INDEX idx_created_at (created_at),
-  INDEX idx_published (is_published)
+  created_by VARCHAR(255)
 );
+
+CREATE INDEX IF NOT EXISTS idx_blocks_type ON blocks(type);
+CREATE INDEX IF NOT EXISTS idx_blocks_created_at ON blocks(created_at);
+CREATE INDEX IF NOT EXISTS idx_blocks_published ON blocks(is_published);
 
 -- Create block_data table for flexible key-value storage
 CREATE TABLE IF NOT EXISTS block_data (
@@ -21,9 +22,10 @@ CREATE TABLE IF NOT EXISTS block_data (
   value JSONB,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  INDEX idx_block_id (block_id),
   UNIQUE (block_id, key)
 );
+
+CREATE INDEX IF NOT EXISTS idx_block_data_block_id ON block_data(block_id);
 
 -- Create block_templates table for presets
 CREATE TABLE IF NOT EXISTS block_templates (
@@ -33,9 +35,10 @@ CREATE TABLE IF NOT EXISTS block_templates (
   config JSONB NOT NULL,
   description TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  INDEX idx_type (type)
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE INDEX IF NOT EXISTS idx_block_templates_type ON block_templates(type);
 
 -- Create block_version_history table for audit trail
 CREATE TABLE IF NOT EXISTS block_versions (
@@ -44,10 +47,11 @@ CREATE TABLE IF NOT EXISTS block_versions (
   config JSONB NOT NULL,
   change_description VARCHAR(500),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  created_by VARCHAR(255),
-  INDEX idx_block_id (block_id),
-  INDEX idx_created_at (created_at)
+  created_by VARCHAR(255)
 );
+
+CREATE INDEX IF NOT EXISTS idx_block_versions_block_id ON block_versions(block_id);
+CREATE INDEX IF NOT EXISTS idx_block_versions_created_at ON block_versions(created_at);
 
 -- Function to update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()

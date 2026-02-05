@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { Pool } from "pg";
+import fs from "fs";
+import path from "path";
 import { createAuthRouter } from "./routes/auth";
 import { createBlocksRouter } from "./routes/blocks";
 
@@ -9,6 +11,39 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Initialize database on startup
+async function initializeDatabase() {
+  const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+  });
+
+  try {
+    console.log("🔄 Checking and running migrations...");
+
+    const migrationsDir = path.join(__dirname, "migrations");
+    const sqlFiles = fs
+      .readdirSync(migrationsDir)
+      .filter((f) => f.endsWith(".sql"))
+      .sort();
+
+    for (const file of sqlFiles) {
+      const filePath = path.join(migrationsDir, file);
+      const sql = fs.readFileSync(filePath, "utf-8");
+
+      console.log(`  📝 Running ${file}...`);
+      await pool.query(sql);
+      console.log(`    ✅ ${file} completed`);
+    }
+
+    console.log("✅ Database migrations completed successfully!");
+    await pool.end();
+  } catch (error: any) {
+    console.error("⚠️  Database initialization error:", error.message);
+    // Don't exit - the app can still serve with a delayed database connection
+    // This handles the case where DATABASE_URL is not yet set on first deploy
+  }
+}
 
 // Middleware
 app.use(cors());
@@ -75,7 +110,18 @@ app.use("/", createAuthRouter(pool));
 // Mount block routes
 app.use("/api", createBlocksRouter(pool));
 
-app.listen(PORT, () => {
-  console.log(`🚀 Backend running on http://localhost:${PORT}`);
-  console.log(`📚 API Documentation: http://localhost:${PORT}`);
+// Start server and initialize DB
+async function start() {
+  // Run migrations on startup
+  await initializeDatabase();
+  
+  app.listen(PORT, () => {
+    console.log(`🚀 Backend running on http://localhost:${PORT}`);
+    console.log(`📚 API Documentation: http://localhost:${PORT}`);
+  });
+}
+
+start().catch((error) => {
+  console.error("Failed to start server:", error);
+  process.exit(1);
 });

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,50 +7,131 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 3.6%;
+    --foreground: 0 0% 0%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.6%;
+    --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.6%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 9.0%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.6%;
-    --primary: 0 0% 9.0%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9.0%;
-  }
-
-  .dark {
-    --background: 0 0% 3.6%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.6%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.6%;
-    --popover-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 98%;
-    --accent-foreground: 0 0% 9.0%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.3%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9.0%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
+    --popover-foreground: 0 0% 0%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 0 0% 0%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 0%;
+    --input: 0 0% 100%;
+    --ring: 0 0% 0%;
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 0 0% 0%;
   }
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
 body {
-  color: hsl(var(--foreground));
-  background: hsl(var(--background));
+  height: 100%;
+}
+
+body {
+  color: #000000;
+  background: #ffffff;
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 5rem;
+  @apply tracking-tighter;
+}
+
+h2 {
+  font-size: 3rem;
+  @apply tracking-tighter;
+}
+
+h3 {
+  font-size: 2rem;
+  @apply tracking-tighter;
+}
+
+code,
+pre {
+  font-family: "JetBrains Mono", monospace;
+}
+
+pre {
+  background: #f5f5f5;
+  border: 1px solid #000000;
+  padding: 1.5rem;
+  overflow-x: auto;
+}
+
+code {
+  font-size: 0.9rem;
+}
+
+/* Brutalist buttons */
+button,
+a.button {
+  border: 2px solid #000000;
+  background: #000000;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: none;
+  text-decoration: none;
+  display: inline-block;
+}
+
+button:hover,
+a.button:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+button.secondary,
+a.button.secondary {
+  background: transparent;
+  color: #000000;
+}
+
+button.secondary:hover,
+a.button.secondary:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+/* Brutalist borders */
+.border-raw {
+  border: 1px solid #000000;
+}
+
+.border-thick {
+  border: 2px solid #000000;
+}
+
+/* High contrast */
+.high-contrast {
+  filter: contrast(1.2);
 }
