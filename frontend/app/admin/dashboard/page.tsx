@@ -36,7 +36,7 @@ export default function AdminDashboard() {
         }
 
         const data = await response.json();
-        setUser(data.user || JSON.parse(storedUser));
+        setUser(data.user || (storedUser ? JSON.parse(storedUser) : null));
         setLoading(false);
       } catch (err) {
         console.error("Auth check failed:", err);
