@@ -23,43 +23,32 @@ export function createAuthRouter(pool: Pool) {
         return res.status(400).json({ error: "Email and password required" });
       }
 
-      // Find user
-      const result = await pool.query(
-        "SELECT id, email, password_hash, role FROM users WHERE email = $1",
-        [email]
-      );
+      // Hardcoded admin user for MVP (remove when database is ready)
+      const adminEmail = "admin@blockui.local";
+      const adminPassword = "blockui123";
 
-      if (result.rows.length === 0) {
+      if (email !== adminEmail) {
         return res.status(401).json({ error: "Invalid credentials" });
       }
 
-      const user = result.rows[0];
-
-      // Verify password
-      const passwordMatch = await verifyPassword(password, user.password_hash);
-      if (!passwordMatch) {
+      if (password !== adminPassword) {
         return res.status(401).json({ error: "Invalid credentials" });
-      }
-
-      // Check if user has admin role
-      if (user.role !== "admin") {
-        return res.status(403).json({ error: "Admin access required" });
       }
 
       // Generate token
       const token = generateToken({
-        userId: user.id,
-        email: user.email,
-        role: user.role,
+        userId: "admin-001",
+        email: email,
+        role: "admin",
       });
 
       res.json({
         success: true,
         token,
         user: {
-          id: user.id,
-          email: user.email,
-          role: user.role,
+          id: "admin-001",
+          email: email,
+          role: "admin",
         },
       });
     } catch (error) {
