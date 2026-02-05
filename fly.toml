@@ -1,30 +1,23 @@
-# fly.toml app configuration file generated for embed-blocks-dev
+# fly.toml app configuration file generated for blockui on 2026-02-05T14:20:25Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "embed-blocks-dev"
-primary_region = "arn"
+app = 'blockui'
+primary_region = 'ams'
 
 [build]
-  dockerfile = "Dockerfile.multi"
-
-[env]
-  NODE_ENV = "production"
-  NEXT_PUBLIC_API_URL = "https://embed-blocks-dev.fly.dev"
 
 [http_service]
-  internal_port = 3000
+  internal_port = 8080
   force_https = true
-  auto_stop_machines = true
+  auto_stop_machines = 'stop'
   auto_start_machines = true
-  min_machines_running = 1
+  min_machines_running = 0
+  processes = ['app']
 
-[[services]]
-  protocol = "tcp"
-  internal_port = 5000
-
-  [services.concurrency]
-    type = "connections"
-    hard_limit = 1000
-    soft_limit = 800
-
-[env.production]
-  NODE_ENV = "production"
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 256
