@@ -158,27 +158,54 @@ export default function AdminDashboard() {
           </div>
         </div>
 
+        {/* Navigation Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow p-8 text-white cursor-pointer hover:shadow-lg transition" onClick={() => router.push('/admin/blocks')}>
+            <h3 className="text-2xl font-bold mb-2">📦 Manage Blocks</h3>
+            <p className="text-blue-100 mb-4">Create and manage your reusable content blocks</p>
+            <button className="px-4 py-2 bg-white text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition">
+              Go to Blocks
+            </button>
+          </div>
+
+          <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg shadow p-8 text-white">
+            <h3 className="text-2xl font-bold mb-2">📊 Analytics</h3>
+            <p className="text-purple-100 mb-4">Track block usage and performance metrics</p>
+            <button className="px-4 py-2 bg-white text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition opacity-50 cursor-not-allowed">
+              Coming Soon
+            </button>
+          </div>
+        </div>
+
         {/* Coming Soon Section */}
         <div className="bg-white rounded-lg shadow p-8">
           <h2 className="text-xl font-semibold text-slate-900 mb-4">
-            Features Coming Soon
+            Admin Features
           </h2>
           <ul className="space-y-3 text-slate-600">
             <li className="flex items-start gap-3">
-              <span className="text-slate-400 mt-1">→</span>
+              <span className="text-green-600 mt-1">✓</span>
               <span>Block Management Dashboard</span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="text-slate-400 mt-1">→</span>
-              <span>Create and Edit Embed Blocks</span>
+              <span className="text-green-600 mt-1">✓</span>
+              <span>Create and Edit Embed Blocks (Logo Carousel, Testimonials, Features)</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-green-600 mt-1">✓</span>
+              <span>Live Preview and Configuration</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-green-600 mt-1">✓</span>
+              <span>Publish / Draft Control</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-slate-400 mt-1">→</span>
-              <span>User Management</span>
+              <span>User Management (Coming Soon)</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-slate-400 mt-1">→</span>
-              <span>Analytics and Usage Statistics</span>
+              <span>Analytics and Usage Statistics (Coming Soon)</span>
             </li>
           </ul>
         </div>

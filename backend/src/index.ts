@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { Pool } from "pg";
 import { createAuthRouter } from "./routes/auth";
+import { createBlocksRouter } from "./routes/blocks";
 
 dotenv.config();
 
@@ -42,13 +43,27 @@ app.get("/health", async (req, res) => {
 app.get("/", (req, res) => {
   res.json({
     name: "BlockUI Backend API",
-    version: "0.1.0",
+    version: "1.0.0",
     endpoints: {
       health: "/health",
       admin: {
         login: "POST /admin/login",
         verify: "POST /admin/verify",
         me: "GET /admin/me",
+      },
+      blocks: {
+        list: "GET /api/blocks",
+        get: "GET /api/blocks/:id",
+        create: "POST /api/blocks",
+        update: "PUT /api/blocks/:id",
+        delete: "DELETE /api/blocks/:id",
+        publish: "POST /api/blocks/:id/publish",
+        types: "GET /api/blocks/types",
+        templates: "GET /api/block-templates",
+        versions: "GET /api/blocks/:id/versions",
+      },
+      embed: {
+        get: "GET /embed/:blockId (public, no auth required)",
       },
     },
   });
@@ -57,9 +72,8 @@ app.get("/", (req, res) => {
 // Mount auth routes
 app.use("/", createAuthRouter(pool));
 
-// TODO: Add routes
-// - GET/POST /admin/blocks
-// - GET /embed/:blockId (public)
+// Mount block routes
+app.use("/api", createBlocksRouter(pool));
 
 app.listen(PORT, () => {
   console.log(`🚀 Backend running on http://localhost:${PORT}`);
