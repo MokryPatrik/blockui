@@ -1,0 +1,30 @@
+# fly.toml app configuration file generated for embed-blocks-dev
+
+app = "embed-blocks-dev"
+primary_region = "arn"
+
+[build]
+  dockerfile = "Dockerfile.multi"
+
+[env]
+  NODE_ENV = "production"
+  NEXT_PUBLIC_API_URL = "https://embed-blocks-dev.fly.dev"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 5000
+
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 1000
+    soft_limit = 800
+
+[env.production]
+  NODE_ENV = "production"
